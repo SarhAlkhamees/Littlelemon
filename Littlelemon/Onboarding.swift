@@ -15,52 +15,59 @@ struct Onboarding: View {
     @State var lastName: String = ""
     @State var email: String = ""
     @State var showErrorMessage: Bool = false
+    @State var isLoggedIn: Bool = false
     
     var body: some View {
-        VStack{
-            TextField("First Name", text: $firstName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: firstName){
-                    showErrorMessage = false
+        NavigationView{
+            VStack{
+                NavigationLink(destination: Home(), isActive: $isLoggedIn){
+                    EmptyView()
                 }
-            TextField("Last Name", text: $lastName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: lastName){
-                    showErrorMessage = false
+                TextField("First Name", text: $firstName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: firstName){
+                        showErrorMessage = false
+                    }
+                TextField("Last Name", text: $lastName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: lastName){
+                        showErrorMessage = false
+                    }
+                TextField("Email", text: $email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: email){
+                        showErrorMessage = false
+                    }
+                
+                if showErrorMessage {
+                    if !email.isEmpty && !isValidEmail(email){
+                        Text("Please enter a valid email address!")
+                            .foregroundStyle(.red)
+                            .padding()
+                    } else {
+                        Text("Please enter all the required fields!")
+                            .foregroundStyle(.red)
+                            .padding()
+                    }
                 }
-            TextField("Email", text: $email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: email){
-                    showErrorMessage = false
-                }
-            
-            if showErrorMessage {
-                if !email.isEmpty && !isValidEmail(email){
-                  Text("Please enter a valid email address!")
-                        .foregroundStyle(.red)
-                        .padding()
-                } else {
-                    Text("Please enter all the required fields!")
-                        .foregroundStyle(.red)
-                        .padding()
-                }
-            }
-            
-            Button("Register"){
-                if !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty{
-                    if isValidEmail(email){
-                        UserDefaults.standard.set(firstName, forKey: kFirstName)
-                        UserDefaults.standard.set(lastName, forKey: kLastName)
-                        UserDefaults.standard.set(email, forKey: kEmail)
+                
+                Button("Register"){
+                    if !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty{
+                        if isValidEmail(email){
+                            UserDefaults.standard.set(firstName, forKey: kFirstName)
+                            UserDefaults.standard.set(lastName, forKey: kLastName)
+                            UserDefaults.standard.set(email, forKey: kEmail)
+                            isLoggedIn = true
+                        } else {
+                            showErrorMessage = true
+                        }
                     } else {
                         showErrorMessage = true
                     }
-                } else {
-                    showErrorMessage = true
                 }
             }
+            .padding()
         }
-        .padding()
     }
     
     func isValidEmail(_ email: String) -> Bool {
