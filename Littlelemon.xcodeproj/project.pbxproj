@@ -13,6 +13,7 @@
 		E5644A992C0086EF00F11683 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5644A982C0086EF00F11683 /* Onboarding.swift */; };
 		E5644A9B2C00907C00F11683 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5644A9A2C00907C00F11683 /* Home.swift */; };
 		E5644A9D2C00911100F11683 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5644A9C2C00911100F11683 /* Menu.swift */; };
+		E5644A9F2C00957000F11683 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5644A9E2C00957000F11683 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		E5644A982C0086EF00F11683 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		E5644A9A2C00907C00F11683 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		E5644A9C2C00911100F11683 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		E5644A9E2C00957000F11683 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				E5644A8A2C0084D200F11683 /* LittlelemonApp.swift */,
 				E5644A9A2C00907C00F11683 /* Home.swift */,
+				E5644A9E2C00957000F11683 /* UserProfile.swift */,
 				E5644A9C2C00911100F11683 /* Menu.swift */,
 				E5644A982C0086EF00F11683 /* Onboarding.swift */,
 				E5644A8E2C0084D300F11683 /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 			files = (
 				E5644A992C0086EF00F11683 /* Onboarding.swift in Sources */,
 				E5644A9B2C00907C00F11683 /* Home.swift in Sources */,
+				E5644A9F2C00957000F11683 /* UserProfile.swift in Sources */,
 				E5644A9D2C00911100F11683 /* Menu.swift in Sources */,
 				E5644A8B2C0084D200F11683 /* LittlelemonApp.swift in Sources */,
 			);
