@@ -8,46 +8,115 @@
 import SwiftUI
 import CoreData
 
+enum MenuCategory: String, CaseIterable {
+    case starters
+    case mains
+    case desserts
+    case drinks
+}
+
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var searchText: String = ""
+    @State var selectedCategory: MenuCategory? = nil
     
     var body: some View {
         NavigationView{
             VStack{
-                Text("Little Lemon")
-                    .font(Font.custom("Markazi", size: 60).weight(.medium))
-                Text("Chicago")
-                    .font(Font.custom("Markazi", size: 32))
-                Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
-                    .font(Font.custom("Markazi", size: 16).weight(.medium))
-                    .padding()
+                ZStack{
+                    Image("logo-image")
+                    HStack{
+                        Spacer()
+                        Button {} label: {
+                            Image("profile-image-placeholder")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 65, height: 65)
+                                .padding(.trailing, 10)
+                        }
+                    }
+                }
+                VStack(alignment: .leading) {
+                    Text("Little Lemon")
+                        .font(Font.custom("Markazi", size: 50).weight(.medium))
+                        .foregroundStyle(.primaryColor2)
+                    HStack(){
+                        VStack(alignment: .leading){
+                            Text("Chicago")
+                                .font(Font.custom("Markazi", size: 32))
+                                .foregroundStyle(.secondaryColor3)
+                                .padding(.bottom, -7)
+                            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                .font(Font.custom("Markazi", size: 16).weight(.medium))
+                                .padding(.trailing, 10)
+                                .foregroundStyle(.secondaryColor3)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                        }
+                        Image("hero-image")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 110, maxHeight: 120)
+                            .cornerRadius(8)
+                            .padding(.bottom, 10)
+                    }
+                    Spacer()
+                    TextField("Search menu", text: $searchText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                }
+                .padding()
+                .background(.primaryColor1)
                 
-                TextField("Search menu", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                VStack(alignment: .leading){
+                    Text("ORDER FOR DELIVERY!")
+                        .bold()
+                    ScrollView(.horizontal ,showsIndicators: false){
+                        HStack{
+                            ForEach(MenuCategory.allCases, id: \.self){ category in
+                                Button(category.rawValue){
+                                    if selectedCategory == category {
+                                        selectedCategory = nil
+                                    } else {
+                                        selectedCategory = category
+                                    }
+                                }
+                                .foregroundStyle(Color.primaryColor1)
+                                .background(selectedCategory == category ? Color.primaryColor2 : Color.secondaryColor3)
+                                .buttonStyle(.bordered)
+                                .clipShape(Capsule())
+                                .bold()
+                            }
+                        }
+                    }
+                }
+                .padding()
                 
                 FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
                     List{
-                        ForEach(dishes, id: \.self){ dish in
-                            NavigationLink(destination: DishDetails(dish: dish)){
-                                HStack{
-                                    VStack(alignment: .leading){
-                                        Text(dish.title ?? "")
-                                        Spacer(minLength: 5)
-                                        Text(dish.description_dish ?? "")
-                                            .font(Font.custom("Karla", size: 14))
-                                        Spacer(minLength: 5)
-                                        Text("$\(dish.price ?? "")")
-                                        Spacer(minLength: 5)
-                                    }
-                                    Spacer()
-                                    AsyncImage(url: URL(string: dish.image ?? "")){ image in
-                                        image.resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 50, height: 50)
-                                    } placeholder: {
-                                        ProgressView()
+                        if dishes.isEmpty{
+                            Text("No items found!")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            ForEach(dishes, id: \.self){ dish in
+                                NavigationLink(destination: DishDetails(dish: dish)){
+                                    HStack{
+                                        VStack(alignment: .leading){
+                                            Text(dish.title ?? "")
+                                            Spacer(minLength: 5)
+                                            Text(dish.description_dish ?? "")
+                                                .font(Font.custom("Karla", size: 14))
+                                            Spacer(minLength: 5)
+                                            Text("$\(dish.price ?? "")")
+                                            Spacer(minLength: 5)
+                                        }
+                                        Spacer()
+                                        AsyncImage(url: URL(string: dish.image ?? "")){ image in
+                                            image.resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 50, height: 50)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
                                     }
                                 }
                             }
@@ -92,6 +161,7 @@ struct Menu: View {
                             dish.image = menuItem.image
                             dish.price = menuItem.price
                             dish.description_dish = menuItem.description_dish
+                            dish.category = menuItem.category
                         }
                     }
                     try? viewContext.save()
@@ -124,11 +194,24 @@ struct Menu: View {
     }
     
     func buildPredicate() -> NSPredicate{
-        if searchText.isEmpty {
-            return NSPredicate(value: true)
-        } else {
-            return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+        var predicates = [NSPredicate]()
+        
+        let searchField = searchText.isEmpty ? NSPredicate(value: true) : NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+        predicates.append(searchField)
+        
+        switch selectedCategory {
+        case .starters:
+            predicates.append(NSPredicate(format: "category == %@", MenuCategory.starters.rawValue))
+        case .mains:
+            predicates.append(NSPredicate(format: "category == %@", MenuCategory.mains.rawValue))
+        case .desserts:
+            predicates.append(NSPredicate(format: "category == %@", MenuCategory.desserts.rawValue))
+        case .drinks:
+            predicates.append(NSPredicate(format: "category == %@", MenuCategory.drinks.rawValue))
+        case nil:
+            break
         }
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 }
 
