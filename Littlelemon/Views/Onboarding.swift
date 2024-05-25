@@ -10,6 +10,7 @@ let kFirstName = "first name key"
 let kLastName = "last name key"
 let kEmail = "email key"
 let kIsLoggedIn = "kIsLoggedIn"
+let kPhoneNumber = "phone number key"
 
 struct Onboarding: View {
     @State var firstName: String = ""
