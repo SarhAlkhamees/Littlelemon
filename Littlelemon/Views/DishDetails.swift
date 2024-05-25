@@ -24,17 +24,21 @@ struct DishDetails: View {
                 
                 Text(dish.title ?? "")
                     .font(Font.custom("Markazi", size: 32))
+                    .foregroundStyle(.secondaryColor4)
                     .padding()
                 
                 Text(dish.category ?? "")
                     .font(Font.custom("Markazi", size: 16))
+                    .foregroundStyle(.secondaryColor4)
                 
                 Text(dish.description_dish ?? "")
                     .font((Font.custom("Markazi", size: 18)))
+                    .foregroundStyle(.primaryColor1)
                     .padding()
                 
                 Text("$\(dish.price ?? "")")
                     .font(Font.custom("Karla", size: 14))
+                    .foregroundStyle(.primaryColor1)
                     .monospaced()
                 
                 Spacer()
