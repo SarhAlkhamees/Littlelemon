@@ -10,6 +10,7 @@ import CoreData
 
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @State var searchText: String = ""
     
     var body: some View {
         NavigationView{
@@ -20,6 +21,10 @@ struct Menu: View {
                     .font(Font.custom("Markazi", size: 32))
                 Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
                     .font(Font.custom("Markazi", size: 16).weight(.medium))
+                    .padding()
+                
+                TextField("Search menu", text: $searchText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
                 FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
@@ -114,12 +119,16 @@ struct Menu: View {
     }
     
     func buildSortDescriptors() -> [NSSortDescriptor]{
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true, selector:  #selector(NSString.localizedStandardCompare))
         return [sortDescriptor]
     }
     
     func buildPredicate() -> NSPredicate{
-        return NSPredicate(value: true)
+        if searchText.isEmpty {
+            return NSPredicate(value: true)
+        } else {
+            return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+        }
     }
 }
 
