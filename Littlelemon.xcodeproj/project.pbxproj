@@ -70,16 +70,9 @@
 			isa = PBXGroup;
 			children = (
 				E5644A8A2C0084D200F11683 /* LittlelemonApp.swift */,
-				E5644A9A2C00907C00F11683 /* Home.swift */,
-				E5644A9E2C00957000F11683 /* UserProfile.swift */,
-				E5644A9C2C00911100F11683 /* Menu.swift */,
-				E5644AAD2C01E01000F11683 /* DishDetails.swift */,
-				E5644AA42C01D4D100F11683 /* MenuList.swift */,
-				E5644AA62C01D4E800F11683 /* MenuItem.swift */,
-				E5644A982C0086EF00F11683 /* Onboarding.swift */,
-				E5644AA02C01D43500F11683 /* FetchedObjects.swift */,
-				E5644AA22C01D43C00F11683 /* Persistence.swift */,
-				E5644AA82C01D60E00F11683 /* ExampleDatabase.xcdatamodeld */,
+				E5644AB12C02874000F11683 /* DataModel */,
+				E5644AB02C0286E300F11683 /* Views */,
+				E5644AAF2C0286C600F11683 /* Models */,
 				E5644A8E2C0084D300F11683 /* Assets.xcassets */,
 				E5644A902C0084D300F11683 /* Preview Content */,
 			);
@@ -92,6 +85,37 @@
 				E5644A912C0084D300F11683 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E5644AAF2C0286C600F11683 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E5644AA62C01D4E800F11683 /* MenuItem.swift */,
+				E5644AA42C01D4D100F11683 /* MenuList.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E5644AB02C0286E300F11683 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E5644A982C0086EF00F11683 /* Onboarding.swift */,
+				E5644A9A2C00907C00F11683 /* Home.swift */,
+				E5644A9C2C00911100F11683 /* Menu.swift */,
+				E5644AAD2C01E01000F11683 /* DishDetails.swift */,
+				E5644A9E2C00957000F11683 /* UserProfile.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E5644AB12C02874000F11683 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				E5644AA82C01D60E00F11683 /* ExampleDatabase.xcdatamodeld */,
+				E5644AA02C01D43500F11683 /* FetchedObjects.swift */,
+				E5644AA22C01D43C00F11683 /* Persistence.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,8 +410,7 @@
 				E5644AA92C01D60E00F11683 /* ExampleDatabase.xcdatamodel */,
 			);
 			currentVersion = E5644AA92C01D60E00F11683 /* ExampleDatabase.xcdatamodel */;
-			name = ExampleDatabase.xcdatamodeld;
-			path = /Users/sarahalkhamees/Desktop/Xcode/Littlelemon/Littlelemon/ExampleDatabase.xcdatamodeld;
+			path = ExampleDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
