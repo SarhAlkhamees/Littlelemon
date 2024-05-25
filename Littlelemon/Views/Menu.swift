@@ -45,21 +45,19 @@ struct Menu: View {
                             Text("Chicago")
                                 .font(Font.custom("Markazi", size: 32))
                                 .foregroundStyle(.secondaryColor3)
-                                .padding(.bottom, -7)
                             Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
                                 .font(Font.custom("Markazi", size: 16).weight(.medium))
-                                .padding(.trailing, 10)
+                                .fixedSize(horizontal: false, vertical: true)
                                 .foregroundStyle(.secondaryColor3)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         }
                         Image("hero-image")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(maxWidth: 110, maxHeight: 120)
                             .cornerRadius(8)
-                            .padding(.bottom, 10)
                     }
                     Spacer()
+                    
                     TextField("Search menu", text: $searchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
@@ -102,11 +100,14 @@ struct Menu: View {
                                     HStack{
                                         VStack(alignment: .leading){
                                             Text(dish.title ?? "")
+                                                .foregroundStyle(Color.secondaryColor4)
                                             Spacer(minLength: 5)
                                             Text(dish.description_dish ?? "")
                                                 .font(Font.custom("Karla", size: 14))
+                                                .foregroundStyle(Color.primaryColor1)
                                             Spacer(minLength: 5)
                                             Text("$\(dish.price ?? "")")
+                                                .foregroundStyle(Color.primaryColor1)
                                             Spacer(minLength: 5)
                                         }
                                         Spacer()
