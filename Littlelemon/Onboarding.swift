@@ -21,24 +21,62 @@ struct Onboarding: View {
     var body: some View {
         NavigationView{
             VStack{
+                Image("logo-image")
+                VStack(alignment: .leading) {
+                    Text("Little Lemon")
+                        .font(Font.custom("Markazi", size: 50).weight(.medium))
+                        .foregroundStyle(.primaryColor2)
+                    
+                    HStack(){
+                        VStack(alignment: .leading){
+                            Text("Chicago")
+                                .font(Font.custom("Markazi", size: 32))
+                                .foregroundStyle(.secondaryColor3)
+                            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                .font(Font.custom("Markazi", size: 16).weight(.medium))
+                                .foregroundStyle(.secondaryColor3)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        Image("hero-image")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 110, maxHeight: 120)
+                            .cornerRadius(8)
+                            .padding(.bottom, 10)
+                    }
+                }
+                .padding()
+                .background(.primaryColor1)
+                
                 NavigationLink(destination: Home(), isActive: $isLoggedIn){
                     EmptyView()
                 }
-                TextField("First Name", text: $firstName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .onChange(of: firstName){
-                        showErrorMessage = false
-                    }
-                TextField("Last Name", text: $lastName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .onChange(of: lastName){
-                        showErrorMessage = false
-                    }
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .onChange(of: email){
-                        showErrorMessage = false
-                    }
+                VStack(alignment: .leading){
+                    Text("First Name *")
+                        .foregroundStyle(.secondary)
+                    TextField("First Name", text: $firstName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: firstName){
+                            showErrorMessage = false
+                        }
+                    Text("Last Name *")
+                        .foregroundStyle(.secondary)
+                    TextField("Last Name", text: $lastName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: lastName){
+                            showErrorMessage = false
+                        }
+                    Text("Email *")
+                        .foregroundStyle(.secondary)
+                    TextField("Email", text: $email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: email){
+                            showErrorMessage = false
+                        }
+                }
+                .padding()
                 
                 if showErrorMessage {
                     if !email.isEmpty && !isValidEmail(email){
@@ -60,11 +98,19 @@ struct Onboarding: View {
                             UserDefaults.standard.set(email, forKey: kEmail)
                             UserDefaults.standard.set(true, forKey: kIsLoggedIn)
                             isLoggedIn = true
+                        } else {
+                            showErrorMessage = true
                         }
                     } else {
                         showErrorMessage = true
                     }
                 }
+                .frame(width: 250, height: 50)
+                .font(.headline)
+                .foregroundStyle(.secondaryColor4)
+                .background(.primaryColor2)
+                .cornerRadius(8)
+                .padding(5)
                 .onAppear{
                     if UserDefaults.standard.bool(forKey: kIsLoggedIn){
                         isLoggedIn = true
@@ -74,7 +120,9 @@ struct Onboarding: View {
                         email = ""
                     }
                 }
+                Spacer()
             }
+            Spacer()
             .padding()
         }
     }
