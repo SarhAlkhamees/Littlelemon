@@ -14,30 +14,32 @@ struct UserProfile: View {
     @Environment(\.presentationMode) var presentation
     
     var body: some View {
-        VStack{
-            Text("Personal information")
-            Image("profile-image-placeholder")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 200, height: 200)
-            
-            VStack(alignment: .leading){
-                Text("First name: ")
-                TextField("First name", text: $firstName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("Last name: ")
-                TextField("Last name", text: $lastName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("Email: ")
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+        ScrollView{
+            VStack{
+                Text("Personal information")
+                Image("profile-image-placeholder")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 200, height: 200)
+                
+                VStack(alignment: .leading){
+                    Text("First name: ")
+                    TextField("First name", text: $firstName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("Last name: ")
+                    TextField("Last name", text: $lastName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Text("Email: ")
+                    TextField("Email", text: $email)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                .padding()
+                Button("Logout"){
+                    UserDefaults.standard.set(false, forKey: kIsLoggedIn)
+                    self.presentation.wrappedValue.dismiss()
+                }
+                Spacer()
             }
-            .padding()
-            Button("Logout"){
-                UserDefaults.standard.set(false, forKey: kIsLoggedIn)
-                self.presentation.wrappedValue.dismiss()
-            }
-            Spacer()
         }
     }
 }
