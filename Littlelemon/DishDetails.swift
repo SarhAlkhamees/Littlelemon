@@ -26,6 +26,9 @@ struct DishDetails: View {
                     .font(Font.custom("Markazi", size: 32))
                     .padding()
                 
+                Text(dish.category ?? "")
+                    .font(Font.custom("Markazi", size: 16))
+                
                 Text(dish.description_dish ?? "")
                     .font((Font.custom("Markazi", size: 18)))
                     .padding()
