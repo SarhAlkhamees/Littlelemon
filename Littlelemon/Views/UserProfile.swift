@@ -25,6 +25,14 @@ struct UserProfile: View {
                 ZStack{
                     Image("logo-image")
                     HStack{
+                        NavigationLink(destination: Home()){
+                            Image(systemName: "arrowshape.backward.fill")
+                                .foregroundStyle(.white)
+                                .frame(width: 40, height: 40)
+                                .background(.primaryColor1)
+                                .clipShape(Circle())
+                                .padding(.leading, 10)
+                        }
                         Spacer()
                         Button {} label: {
                             Image("profile-image-placeholder")
